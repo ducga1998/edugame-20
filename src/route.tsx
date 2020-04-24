@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import React from "react";
 import EditVideo from './EditVideo'
+const URL_VIDEO = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4"
 export default function RouterComponent() {
     return (
         <Router>
@@ -22,7 +23,7 @@ export default function RouterComponent() {
             renders the first one that matches the current URL. */}
                 <Switch>
                     <Route path="/editVideo">
-                        <EditVideo />
+                        <EditVideo src={URL_VIDEO} />
                     </Route>
 
                 </Switch>
