@@ -7,12 +7,15 @@ import * as serviceWorker from './serviceWorker'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { ThemeProvider } from '@material-ui/core/styles'
 import theme from './components/theme'
+import { ProvideAuth } from './hooks/useAuth'
 
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <App />
+      <ProvideAuth>
+        <App />
+      </ProvideAuth>
     </ThemeProvider>
     ,
   </React.StrictMode>,
