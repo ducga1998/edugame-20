@@ -3,8 +3,6 @@ import React from 'react';
 import Slider from '@material-ui/core/Slider';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Paper } from "@material-ui/core";
-import AddQuestion from './components/AddQuestion';
-import ControlVideo from './components/ControlVideo'
 const useStyles = makeStyles({
     root: {
         width: '100%',
@@ -51,7 +49,7 @@ const  handleMark =  () => {
                     />
                 </div>
                 <div>
-                <AddQuestion />
+                {/* <AddQuestion /> */}
                     <button onClick={handleMark}>
                         mark 
                     </button>
@@ -60,7 +58,7 @@ const  handleMark =  () => {
             </Grid>
         </Grid>
 
-        <ControlVideo  />
+        {/* <ControlVideo  /> */}
         {/*<pre>{JSON.stringify(state, null, 2)}</pre>*/}
         {/*<button onClick={controls.pause}>Pause</button>*/}
         {/*<button onClick={controls.play}>Play</button>*/}
