@@ -442,5 +442,4 @@ const StudentView: React.FC<{}> = () => {
     </div>
   )
 }
-
 export default StudentView

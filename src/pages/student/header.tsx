@@ -13,11 +13,15 @@ const HeaderStudent = () => {
   const handleMenu = (event: any) => {
     setAnchorEl(event.currentTarget)
   }
-
+  const [backgroundNav , setBackground] = React.useState('white')
   const handleClose = () => {
     setAnchorEl(null)
   }
-
+  React.useEffect(() => {
+      if(window.location.pathname.includes('editVideo')) {
+        setBackground('#13263b')
+      }
+  })
   return (
     <div
       style={{
@@ -29,7 +33,7 @@ const HeaderStudent = () => {
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '8px 16px',
-        backgroundColor: 'white',
+        backgroundColor: backgroundNav,
         boxShadow:
           '0 1px 2px 0 rgba(255,255,255,.1), 0 2px 6px 2px rgba(60,64,67,.15)',
       }}

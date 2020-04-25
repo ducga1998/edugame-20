@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import React from 'react'
-import EditVideo from './EditVideo'
+import EditVideo from './EditVideo/index'
 import StudentView from './pages/student/view'
 import HeaderStudent from './pages/student/header'
 const URL_VIDEO =
@@ -15,7 +15,7 @@ export default function RouterComponent() {
             renders the first one that matches the current URL. */}
         <Switch>
           <Route path="/editVideo">
-            <EditVideo src={URL_VIDEO} />
+            <EditVideo  />
           </Route>
 
           <Route path="/student/view">
