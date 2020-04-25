@@ -5,6 +5,7 @@ import PlayArrow from "@material-ui/icons/PlayArrow";
 import Pause from "@material-ui/icons/Pause";
 import Inspector from "./Inspector";
 import PrettoSlider from "../components/UI/Slider";
+import { useToasts } from 'react-toast-notifications'
 import styled from "styled-components";
 import uuid from "uuid";
 // const Mockdata = ;
@@ -37,7 +38,15 @@ const EditView: React.FC<{}> = () => {
         ]
 
     }) as any
-    const [video, state, controls, ref] = useVideo(<Video src={data.video_url} />) as any;
+    const [video, state, controls, ref] = useVideo( <video
+        width="840"
+        src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
+        // controls
+        style={{
+            borderRadius: "4px",
+            boxShadow: `0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)`,
+        }}
+    />) as any;
   const [timePer, setTimePer] = useState(0);
 
     const [answers , setAnswer] = React.useState(["A: a pen", "B: a hour", "C: an car", "D: a eraser"])
@@ -47,7 +56,6 @@ const EditView: React.FC<{}> = () => {
             time: 5,
             type: "quiz",
             time_line : "time line",
-
             question: "Chọn đáp án thể hiện đúng cách dùng mạo từ a, an?",
             answers: ["A: a pen", "B: a hour", "C: an car", "D: a eraser"],
             correct: 0,
@@ -55,52 +63,36 @@ const EditView: React.FC<{}> = () => {
                 'Giải thích: a, an đứng trước danh từ số ít, đếm được, an đứng trước nguyên âm phiên âm "ueoai".',
         }
     ]) as any
-    const [question , setQuestion ] = React.useState(null) as any
+    const [indexQuestion , setIndexQuestion ] = React.useState(-1) as any
 
   const handleChange = (event: any, value: any) => {
     const timeNext = (value / 100) * state.duration;
     setTimePer(value);
     controls.seek(timeNext);
-    console.log(
-      "timeNext",
-      timeNext,
-      value,
-      state.duration,
-      state.time,
-      timeNext === state.time
-    );
   };
 
-  const handleQuestions = () => {
+  const handleQuestions = (question :any ) => {
     let newData = [...questions];
-    const newQuestion = {
-      id: newData.length + 1 + '',
-      time: timePer,
-      type: "quiz",
-      question: "Chọn đáp án thể hiện đúng cách dùng mạo từ a, an?",
-      answers: answers,
-      correct: 0,
-      note:
-        'Giải thích: a, an đứng trước danh từ số ít, đếm được, an đứng trước nguyên âm phiên âm "ueoai".',
-    };
+    const  newQuestion  =  {...question ,...{ id: (newData.length + 1 + ''),  time: timePer } }
+      console.log("newQuestion",newQuestion)
     newData = [...newData, ...[newQuestion]];
     setQuestions(newData);
+      // setIndexQuestion(-1)
   };
     useEffect(() => {
-        console.log("casnkjcnaskjc",data)
         // eslint-disable-next-line array-callback-return
        if(questions && questions.length > 0) {
-           questions.map((item : any) => {
-               if (item.time === Math.floor(timePer)) {
-                   setQuestion(item)
-               }
-               else {
-                   setQuestion(null)
-               }
-           })
+          const isQuestion =  questions.find((item : any) =>   Math.floor(item.time)=== Math.floor(timePer) ) as any
+           if(isQuestion) {
+               setIndexQuestion(isQuestion.id)
+           }
+       else {
+               setIndexQuestion(-1)
+           }
+
        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [Math.floor(timePer)])
+    })
   return (
     <div style={{ paddingTop: "56px" }}>
       <div
@@ -175,7 +167,7 @@ const EditView: React.FC<{}> = () => {
           </div>
         </div>
 
-          <Inspector data={data} setQuestions={handleQuestions} answers={answers} changeAnswer = {setAnswer} question={question} />
+          <Inspector data={data} handleQuestions={handleQuestions} answers={answers} questions={questions} changeAnswer = {setAnswer} indexQuestion={indexQuestion} />
       </div>
     </div>
   );
