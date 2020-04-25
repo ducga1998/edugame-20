@@ -4,6 +4,7 @@ import {
     Route,
     Link
 } from "react-router-dom";
+import Navigation from '../src/components/Navigation'
 import React from "react";
 import EditVideo from './EditVideo'
 const URL_VIDEO = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4"
@@ -11,14 +12,8 @@ export default function RouterComponent() {
     return (
         <Router>
             <div>
-                <nav>
-                    <ul>
-                        <li>
-                            <Link to="/editVideo">Edit Video</Link>
-                        </li>
-                    </ul>
-                </nav>
-
+               
+<Navigation />
                 {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
                 <Switch>
