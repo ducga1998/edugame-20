@@ -15,7 +15,7 @@ const EditVideo = (props : any) => {
     const [video, state, controls] = useVideo(<video src={props.src} />)
     const [perVideo, setPerVideo] = React.useState(0);
     const endTimeVideo = state.duration
-    const [marks , setMarks] = React.useState([]) as any
+
     React.useEffect(() => {
         if (typeof perVideo === 'number' && perVideo > 0 && perVideo < 100) {
             controls.seek((perVideo / 100) * endTimeVideo)
@@ -29,10 +29,11 @@ const EditVideo = (props : any) => {
         const finalValue = convertValueTimeToPer(value)
         controls.seek(finalValue)
     };
+const [marks , setMarks] = React.useState([]) as any
+const  handleMark =  () => {
+    setMarks([...marks , ...[{value : perVideo  , label : state.time + '' }]])
+}
 
-    const  handleMark =  () => {
-        setMarks([...marks , ...[{value : perVideo  , label : state.time + '' }]])
-    }
     return <div className={classes.root}>
         <Grid item xs={12}>
             <Grid container justify="center" spacing={6}>

@@ -1,10 +1,10 @@
 import React from 'react'
-import RouterComponent from "./route";
+import RouterComponent from './route'
 
 function App() {
   return (
     <div className="App">
-     <RouterComponent />
+      <RouterComponent />
     </div>
   )
 }

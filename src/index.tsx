@@ -17,7 +17,6 @@ ReactDOM.render(
         <App />
       </ProvideAuth>
     </ThemeProvider>
-    ,
   </React.StrictMode>,
   document.getElementById('root')
 )
