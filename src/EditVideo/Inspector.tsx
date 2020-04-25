@@ -5,6 +5,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import Radio from "@material-ui/core/Radio";
 import styled from "styled-components";
 import { Typography } from "@material-ui/core";
+import { useToasts } from 'react-toast-notifications'
 const Button = styled.div`
   width: auto;
 
@@ -25,6 +26,9 @@ const Input = styled.input`
   outline: none;
   border-radius: 6px;
   margin-top: 2px;
+  &::placeholder{
+    color : #797979;
+  }
 `;
 const Label = styled.label`
   color: #4a586f;
@@ -34,8 +38,32 @@ const FormControl: any = styled.div`
   flex-direction: ${(e: any) => (e.row ? "row" : "column")};
     margin: ${(e : any) => e.notSpacing ?  '0px' : '10px 0px'};
 `;
+const emptyValue  = {
+    type: "quiz",
+    question: "",
+    answers: ["","","",""],
+    correct: 0,
+    note:
+        '',
+}
+const Inspector = ({handleQuestions , answers, questions , indexQuestion, data } : any) => {
+    // @ts-ignore
+    console.log("questions",questions)
+    const [questionsUncontroll , setQuestion] : any  = React.useState(emptyValue) as any
+    const { addToast } = useToasts()
+    const handleSetQuestionKey =(key :string , value : any  )  => {
+            setQuestion({...questionsUncontroll , ...{[key] : value}})
+    }
+    React.useEffect(() => {
 
-const Inspector = ({setQuestions , answers, changeAnswer , question, data} : any) => {
+            if(indexQuestion >= 0) {
+                const questionView =  questions.find((item : any) => item.id == indexQuestion)
+                console.log("questionView",questionView)
+                setQuestion(questionView)
+            }else {
+                setQuestion(emptyValue)
+            }
+    },[indexQuestion])
   return (
     <div
       style={{
@@ -62,40 +90,57 @@ const Inspector = ({setQuestions , answers, changeAnswer , question, data} : any
                 </FormControl>
                 <FormControl>
                     <Label>Time Line</Label>
-                    <Input  value={question && question.time_line  || "" } />
+                    <Input  value={questionsUncontroll.time_line  || "" }
+                            onChange={(e) => handleSetQuestionKey('time_line', e.target.value) }
+                            placeholder="Time Line"
+                    />
+
                 </FormControl>
                 <FormControl>
                     <Label>Question?</Label>
-                    <Input  value={question && question.question || ""} onChange={() => {
-                    }} />
+                    <Input value={questionsUncontroll.question || ""}
+                            onChange={(e) => handleSetQuestionKey('question', e.target.value) }
+                           placeholder="question"
+                    />
                 </FormControl>
                 <FormControl>
                     <Label>Result</Label>
-                    {(question && question.answers ||  ["","","",""]).map((item : any, key : number ) =>   <FormControl row notSpacing>
+                    {(questionsUncontroll && questionsUncontroll.answers).map((item : any, key : number ) =>   <FormControl row notSpacing>
                         <Radio
-                            checked={true}
-                            onChange={(e) => console.log(e)}
+                            checked={key === questionsUncontroll.correct}
+                            onChange={(e) => handleSetQuestionKey('correct',key)  }
                             value="b"
                             name="radio-button-demo"
                             inputProps={{ "aria-label": "B" }}
                         />
                         <FormControl style={{ display: "block" , width : '100%' }}>
-                            <Input style={{ width: "100%" }} value={item} onChange ={(e: any) => {
-                                let newAnswers  =  [...answers]
+                            <Input style={{ width: "100%" }} value={questionsUncontroll.answers[key]} onChange ={(e: any) => {
+                                let newAnswers  =  [...questionsUncontroll.answers]
                                 newAnswers[key] = e.target.value
-                                changeAnswer(newAnswers)
-                            }} />
+                                handleSetQuestionKey('answers',newAnswers)
+                            }}
+                                   placeholder={`Answer  ${key+1}`}
+                            />
                             <DeleteIcon
+                                onClick={() => {
+                                    let newAnswers  =  questionsUncontroll.answers.filter(( item_: string  , keyAn: number ) =>   keyAn !== key )
+                                    handleSetQuestionKey('answers',newAnswers)
+                                }}
                                 style={{
                                     position: "absolute",
                                     transform: "translate(-122% , 19%)",
+                                    cursor: 'pointer'
                                 }}
                             />
                         </FormControl>
                     </FormControl>)}
                 </FormControl>
                 <div>
-                    <Button onClick={setQuestions}>Finish</Button>
+                    <Button onClick={() =>{
+                        handleQuestions(questionsUncontroll)
+                        setQuestion(emptyValue)
+                        addToast('Saved Video Successfully', { appearance: 'success' })
+                    }}>Finish</Button>
                 </div>
             </Typography>
         </div>
