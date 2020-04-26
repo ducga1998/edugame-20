@@ -71,6 +71,9 @@ const HeaderStudent = () => {
           activeStyle={{
             borderBottom: `4px solid #e15a00`,
           }}
+          onClick={() => {
+              setBackground('white')
+          }}
         >
           Library
         </NavLink>
@@ -104,6 +107,41 @@ const HeaderStudent = () => {
         >
           Tracking
         </NavLink>
+          <NavLink to="/student/view"
+                   style={{
+                       fontSize: '16px',
+                       color: 'black',
+                       textDecoration: 'none',
+                       padding: '16px 10px',
+                       marginRight: '20px',
+                   }}
+                   activeStyle={{
+                       borderBottom: `4px solid #e15a00`,
+                   }}
+                   onClick={() => {
+                       setBackground('white')
+                   }}
+          >
+                Student View
+          </NavLink>
+          <NavLink to="/editVideo"
+                   onClick={() => {
+                       setBackground('#13263b')
+                   }}
+                   style={{
+                       fontSize: '16px',
+                       color: 'black',
+                       textDecoration: 'none',
+                       padding: '16px 10px',
+                       marginRight: '20px',
+                   }}
+                   activeStyle={{
+                       borderBottom: `4px solid #e15a00`,
+                   }}
+          >
+              Edit Video
+          </NavLink>
+
       </div>
       <div>
         {/* <IconButton

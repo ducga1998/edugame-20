@@ -19,7 +19,8 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
-
+import {dataContainer} from "../../container/baseContainer";
+import PrettoSlider from '../../components/UI/Slider'
 const data = {
   id: '1',
   video_url: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4',
@@ -48,57 +49,16 @@ const data = {
   ],
 }
 
-const PrettoSlider = withStyles({
-  root: {
-    color: '#0b8cbc',
-    height: 8,
-  },
-  thumb: {
-    height: 24,
-    width: 24,
-    backgroundColor: '#fff',
-    border: '2px solid currentColor',
-    marginTop: -8,
-    marginLeft: -12,
-    '&:focus, &:hover, &$active': {
-      boxShadow: 'inherit',
-    },
-  },
-  active: {},
-  valueLabel: {
-    display: 'none',
-    left: 'calc(-50% + 4px)',
-  },
-  track: {
-    height: 6,
-    borderRadius: 4,
-  },
-  rail: {
-    height: 6,
-    // borderRadius: 4,
-  },
-  mark: {
-    backgroundColor: '#e15a00',
-    borderRadius: 2,
-    height: 10,
-    width: 20,
-    marginTop: -2,
-    marginLeft: -8,
-  },
-  markActive: {
-    opacity: 1,
-    backgroundColor: '#e15a00',
-  },
-})(Slider)
-
 const StudentView: React.FC<{}> = () => {
+    const data  = dataContainer.state as any
   const [showQuestion, setShowQuestion] = useState<Boolean>(false)
   const [showCorrect, setShowCorrect] = useState(false)
   const [showIncorrect, setshowIncorrect] = useState(false)
+  const [perVideo , setPerVideo]  = React.useState(0)
   const [video, state, controls] = useVideo(
     <video
       width="840"
-      src={data.video_url}
+      src="http://localhost:3000/a.mp4"
       // controls
       style={{
         borderRadius: '4px',
@@ -117,7 +77,7 @@ const StudentView: React.FC<{}> = () => {
   }
   useEffect(() => {
     // eslint-disable-next-line array-callback-return
-    data.questions.map((item) => {
+    data.questions.map((item:any) => {
       if (item.time === Math.floor(state.time)) {
         controls.pause()
         setShowQuestion(true)
@@ -168,7 +128,7 @@ const StudentView: React.FC<{}> = () => {
                       textAlign: 'center',
                     }}
                   >
-                    {data.questions.map((item) => {
+                    {data.questions.map((item : any) => {
                       return (
                         <div key={item.id}>
                           {item.time === Math.floor(state.time) && (
@@ -289,7 +249,7 @@ const StudentView: React.FC<{}> = () => {
                 valueLabelDisplay="auto"
                 aria-label="pretto slider"
                 value={state.time}
-                marks={data.questions.map((item) => ({ value: item.time }))}
+                marks={data.questions.map((item : any) => ({ value: item.time }))}
                 style={{ marginRight: '32px' }}
               />
             </div>
