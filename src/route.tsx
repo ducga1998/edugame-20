@@ -3,6 +3,7 @@ import React from 'react'
 import EditVideo from './EditVideo/index'
 import StudentView from './pages/student/view'
 import HeaderStudent from './pages/student/header'
+import Library from "./Library";
 const URL_VIDEO =
   'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4'
 export default function RouterComponent() {
@@ -16,6 +17,9 @@ export default function RouterComponent() {
         <Switch>
           <Route path="/editVideo">
             <EditVideo  />
+          </Route>
+          <Route path="/library">
+            <Library/>
           </Route>
 
           <Route path="/student/view">
